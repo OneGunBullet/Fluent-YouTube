@@ -2,6 +2,9 @@
 
 A WinUI3-based YouTube theme that brings native-looking mica/acrylic surfaces and Fluent-style accents to YouTube's web app.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/09862e65-a0e3-4c82-9b90-32d40cbf8f7a" />
+(Version .2)
+
 ## Installation (recommended)
 I'm planning on making an installable app but for now use any CSS injector extension.
 
