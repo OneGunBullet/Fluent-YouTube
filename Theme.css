@@ -351,6 +351,8 @@ ytd-rich-item-renderer:hover {
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
+/* Posts Section of Homepage Feed */
+
 ytd-post-renderer[uses-compact-lockup] {
     border-width: 0px;
     background: none;
@@ -359,4 +361,9 @@ ytd-post-renderer[uses-compact-lockup] {
     padding-bottom: 0px;
     padding-top: 0px;
     border: none;
+}
+
+button-container style-scope ytd-rich-shelf-renderer {
+    background-color: var(--bg-tint)
+    border-radius: 6px;
 }
