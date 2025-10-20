@@ -350,3 +350,13 @@ ytd-rich-item-renderer:hover {
     !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
+
+ytd-post-renderer[uses-compact-lockup] {
+    border-width: 0px;
+    background: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    border: none;
+}
