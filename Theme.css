@@ -362,7 +362,7 @@ ytd-post-renderer[uses-compact-lockup] {
     padding-top: 0px;
     border: none;
 }
-
+/* See More button still doesn't work */
 button-container style-scope ytd-rich-shelf-renderer {
     background-color: var(--bg-tint)
     border-radius: 6px;
