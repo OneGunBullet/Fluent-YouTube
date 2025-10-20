@@ -1,56 +1,24 @@
-```markdown
-# WinUI3 YouTube Theme (OneGunBullet)
+# YouTube in WinUI3 🐢
 
-A WinUI3-inspired YouTube theme that brings native-looking mica/acrylic surfaces and Fluent-style accents to YouTube's web app.
-
-Colors (hardcoded per request):
-- Tabbed mica: #10002e
-- Regular mica: #241a34
-- Mica alt: #2a2336
-- Accent: #d88de1
-
-## Files
-- winui3-youtube.theme.user.css — the main userstyle CSS file you can install with Stylus or other userstyle managers.
+A WinUI3-based YouTube theme that brings native-looking mica/acrylic surfaces and Fluent-style accents to YouTube's web app.
 
 ## Installation (recommended)
-1. Install a userstyle manager:
-   - Stylus (Chrome/Edge/Firefox): https://add0n.com/stylus.html
-   - Stylish or other managers may also work, but Stylus is recommended.
-
-2. Create a new style and paste the contents of `winui3-youtube.theme.user.css` into it, or import the file if your manager supports direct file import.
-
-3. Ensure the style matches `https://www.youtube.com/*` and enable it.
-
-Optional: Use a userscript manager (Tampermonkey) to inject the CSS if needed.
+I'm planning on making an installable app but for now use any CSS injector extension.
 
 ## Notes & Limitations
-- YouTube's frontend DOM and class names change frequently. This style targets many high-level elements (ytd-app, #masthead-container, #content, guide renderer, video renderer, etc.). Some pages or experimental/updated flows may require selector updates.
-- For maximum compatibility, the stylesheet uses broad selectors and !important flags. That helps keep the theme working across YouTube updates but could occasionally clash with new UI components.
-- The theme uses `backdrop-filter` for blur effects — this is widely supported in modern browsers but may not work in some older browsers or specific configurations.
-- The theme favors a dark, WinUI-like aesthetic. If you encounter contrast issues, you can tweak the variables at the top of the CSS (`--muted-text`, `--text`, etc.).
+- Not tested on light mode
+- "Mica" and "accent" colors are hardcoded into the CSS theme but can be changed
+- 90% of the code is ChatGPT, sorry
+- The web app's (or PWA's) titlebar can't be modified so it won't really look like a native application. I'm going to resolve this issue by, well, making a native webview2 application. 
 
 ## Customization
 If you want to change the mica or accent colors, edit the variables near the top of the CSS:
-```css
-:root{
-  --winui-mica-tabbed: #10002e;
-  --winui-mica: #241a34;
-  --winui-mica-alt: #2a2336;
-  --winui-accent: #d88de1;
-}
-```
+- Mica Tabbed
+- Mica Standard
+- Mica Alt
+- Mica Card
+- Accent Color
 
 ## Known Issues & Future work
-- Some channel / community pages and experimental YouTube layouts may show elements that don't match perfectly — these require additional selectors.
-- A future iteration could add:
-  - A small JS toggler to switch between mica variants or lighten/darken for accessibility.
-  - Support for light mode conversion (this release is dark-only per WinUI typical dark glass).
-  - Packaging as a Chrome/Edge extension for distribution.
-
-If you'd like, I can:
-- Package this into a distributable browser extension (manifest + CSS/JS).
-- Add a small toggler UI (JS) to switch between "Tabbed Mica", "Mica", and "Mica Alt" at runtime.
-- Iterate on specific YouTube pages that you care about (e.g., Channel pages, Shorts, Studio, etc.)
-
-Enjoy the native-feeling YouTube UI!
-```
+- Pages other than the homepage and when a video is open have not been fully fixed
+- The currently "finished" parts of the UI don't fully match WinUI guidelines
