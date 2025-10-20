@@ -1,0 +1,41 @@
+:root {
+  /* mica-card panel color */
+  --winui-mica-card: #352e40;
+  /* tint border color */
+  --winui-border: rgba(255,255,255,0.06);
+  /* Fluent shadow */
+  --winui-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+/* 2) Target YouTube’s popups, context menus and dropdown panels */
+ytd-menu-popup-renderer,
+tp-yt-iron-dropdown,
+tp-yt-paper-listbox,
+.yt-spec-dropdown-shape-next-panel,
+ytp-popup,
+ytp-panel {
+  background-color: var(--winui-mica-card) !important;
+  border: 1px solid var(--winui-border) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--winui-shadow) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  color: var(--yt-foreground) !important;
+  transition: background-color 150ms ease,
+              color 150ms ease,
+              border-color 150ms ease !important;
+}
+
+/* 3) Give each menu item Fluent-style hit-targets and hover feedback */
+tp-yt-paper-listbox > *,
+tp-yt-paper-listbox ytd-menu-service-item-renderer,
+tp-yt-paper-listbox ytd-menu-navigation-item-renderer {
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 2px 0;
+  transition: background-color 120ms ease,
+              color 120ms ease !important;
+}
+
+tp-yt-paper-listbox > *:hover {
+  background-color: rgba(255,255,255,0.08) !important;
+}
