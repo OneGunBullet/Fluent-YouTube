@@ -1,3 +1,5 @@
+/* Pure ChatGPT code for homepage drop-down menus, the animations don't work (code is probably complete BS) and the new design is stuck under the old one */
+
 :root {
   /* mica-card panel color */
   --winui-mica-card: #352e40;
