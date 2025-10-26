@@ -1,0 +1,482 @@
+/* WinUI-inspired YouTube theme (starter) */
+/* Color tokens (hardcoded from user's Windows theme) */
+:root {
+    --mica-tabbed: #10002e;
+    --mica-standard: hsl(0, 0%, 13%, .8);
+    --mica-alt: #292929;
+    --accent: #d88de1;
+    --mica-card:hsla(0, 0%, 100%, 3.26%);
+
+    /* Useful defaults */
+    --yt-masthead-height: 56px;
+    --yt-foreground: #ffffff;
+    --yt-muted: rgba(255,255,255,0.55);
+    --yt-bg: hsla(0, 0%, 23%, 30%);
+
+    --button-color: hsla(0, 0%, 100%, 6.05%);
+    --button-radius: 4px;
+}
+
+/* Tokens for unified tinted panels (use comment tint across UI) */
+:root {
+    --tint-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    --tint-border: rgba(216,141,225,0.06);
+}
+
+/* 1) Page background -> mica alt */
+ytd-app, #page-manager, ytd-browse, ytd-two-column-browse-results-renderer, #contents, #primary, #page-manager ytd-browse {
+    background-color: var(--mica-alt) !important;
+    color: var(--yt-foreground) !important;
+}
+
+html, body, {
+    background-color: var(--yt-bg) !important;
+    color: var(--yt-bg) !important;
+}
+
+/* 2) Topbar (masthead) -> mica standard */
+ytd-masthead, #masthead-container, #masthead {
+    background-color: var(--mica-standard) !important;
+    color: var(--yt-foreground) !important;
+    box-shadow: none !important;
+    border-bottom: 0px solid rgba(216,141,225,0.06) !important; /* subtle separation */
+    height: var(--yt-masthead-height) !important;
+    min-height: var(--yt-masthead-height) !important;
+    border-radius: 0 !important;
+}
+
+/* 3) Left sidebar -> mica standard */
+ytd-guide-renderer, ytd-mini-guide-renderer, #guide, #guide-inner {
+    background-color: var(--mica-standard) !important;
+    color: var(--yt-foreground) !important;
+    box-shadow: none !important;
+    border-right: 0px solid rgba(216,141,225,0.05) !important;
+    border-radius: 0 !important;
+}
+
+/* Make masthead and sidebar visually connected (no gaps, same height alignment) */
+ytd-masthead, ytd-guide-renderer, ytd-mini-guide-renderer {
+    z-index: 1000;
+    /* remove any rounding that would break the continuous surface look */
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+/* Ensure left guide sits flush under the masthead on smaller layouts */
+ytd-guide-renderer, ytd-mini-guide-renderer {
+    margin-top: 0 !important;
+    padding-top: 8px !important;
+}
+
+/* 4) Topics list visually part of topbar and separated like Explorer chips
+   — Removed the full-width/strip background so the chips sit inline with the masthead */
+ytd-topics-renderer,
+ytd-chip-cloud-renderer,
+yt-chip-cloud-chip,
+ytd-chip-cloud-renderer #chips,
+.yt-chip-cloud-chip-renderer,
+.yt-chip-cloud-item {
+    /* ensure no background or full-width surface shows */
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+
+    /* behave as inline elements so they don't create a full-width strip */
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: none !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    z-index: 1100 !important;
+    color: var(--yt-foreground) !important;
+    border-radius: 6px !important;
+}
+
+/* Make topics appear inline and visually attached to the masthead */
+ytd-topics-renderer, ytd-chip-cloud-renderer {
+    gap: 6px !important;
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    /* keep a subtle separator but not a full-width strip */
+    border-left: 1px solid rgba(255,255,255,0.06) !important;
+    height: calc(var(--yt-masthead-height) - 16px) !important;
+    vertical-align: middle !important;
+    /* ensure it doesn't expand to full width */
+    width: auto !important;
+}
+
+/* Chips accent and hover using OS accent color (unchanged) */
+yt-chip-cloud-chip.yt-chip-renderer, .yt-chip {
+    background: transparent !important;
+    color: var(--yt-foreground) !important;
+    border: 1px solid transparent !important;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+yt-chip-cloud-chip.yt-chip-renderer:hover, .yt-chip:hover {
+    background: rgba(216,141,225,0.08) !important;
+    border-color: rgba(216,141,225,0.16) !important;
+    color: var(--yt-foreground) !important;
+}
+yt-chip-cloud-chip.yt-chip-renderer[selected], .yt-chip[selected] {
+    background: linear-gradient(90deg, rgba(216,141,225,0.12), rgba(216,141,225,0.06)) !important;
+    border-color: rgba(216,141,225,0.22) !important;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.25) inset;
+}
+
+/* Small polish: links, icons and text contrast */
+a, a:link, a:visited, ytd-guide-entry-renderer, ytd-guide-section-renderer {
+    color: var(--yt-foreground) !important;
+    text-decoration: none !important;
+}
+
+/* Reduce bright white areas that clash with WinUI look */
+paper-dialog, yt-confirm-dialog-renderer, .yt-dialog-renderer, .yt-live-chat-frame {
+    background: var(--mica-alt) !important;
+    color: var(--yt-foreground) !important;
+}
+
+/* Smooth transitions for theme feel */
+* {
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease !important;
+}
+
+/* Prevent nested elements inside description/comments from drawing their own full backgrounds */
+ytd-comments * ,
+ytd-expander * ,
+ytd-video-secondary-info-renderer * ,
+ytd-video-primary-info-renderer * ,
+#comments * ,
+.yt-lockup-view-model--wrapper *,
+ytd-video-secondary-info-renderer * {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Re-add tinted panels for description and comments only (overrides previous global revert) */
+ytd-expander,
+ytd-video-secondary-info-renderer,
+ytd-video-primary-info-renderer #info-contents,
+ytd-video-primary-info-renderer #container {
+    background: var(--tint-bg) !important;
+    border: 1px solid var(--tint-border) !important;
+    border-radius: 12px !important;
+    padding: 0px !important;
+    margin: 0px 0 !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35) !important;
+    color: var(--yt-foreground) !important;
+    overflow: visible !important;
+}
+
+/* Single outer comments panel */
+ytd-comments,
+#comments,
+ytd-comments#comments {
+    background: var(--tint-bg) !important;
+    border: 1px solid var(--tint-border) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    padding-top: 0px !important;
+    margin: 12px 0 !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35) !important;
+    color: var(--yt-foreground) !important;
+    overflow: visible !important;
+    z-index: 5 !important;
+}
+
+/*Manual fixes */
+
+/* Info under video */
+
+#description, 
+ytd-rich-metadata-renderer
+ytd-expandable-metadata-renderer
+#expandable-metadata {
+    background: var(--tint-bg) !important;
+    border: 1px solid var(--tint-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35) !important;
+    color: var(--yt-foreground) !important;
+    overflow: visible !important;
+    z-index: 5 !important;
+}
+/* causing too many issues website-wide
+#header {
+    background: var(--tint-bg) !important;
+    border: 1px solid var(--tint-border) !important;
+    border-bottom: 0px !important;
+    border-radius: 12px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35) !important;
+    color: var(--yt-foreground) !important;
+    overflow: visible !important;
+    z-index: 4 !important;
+}
+
+#content {
+    background: var(--tint-bg) !important;
+    border: 1px solid var(--tint-border) !important;
+    border-bottom: 0px !important;
+    border-radius: 0px !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35) !important;
+    color: var(--yt-foreground) !important;
+    overflow: visible !important;
+    z-index: 5 !important;
+}
+*/
+#img {
+    border-radius: 12px !important;
+}
+
+/* top of home page */
+
+#frosted-glass {
+    background: var(--mica-standard) !important;
+}
+
+#chips-content {
+    background: var(--mica-alt) !important;
+    border: 1px solid rgba(216,141,225,0.06) !important;
+    border-radius: 0px !important;
+    border-top-left-radius: 8px !important;
+}
+
+.ytChipShapeActive {
+    background: var(--button-color) !important;
+    color: var(--accent) !important;
+}
+
+.ytChipShapeInactive {
+    background-color: rgb(255 255 255 / 0%) !important;
+    color: var(--yt-foreground) !important;
+}
+
+/* Buttons */
+
+.yt-spec-button-shape-next {
+  font-family: "Segoe UI", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  overflow: hidden !important; /* ensures rounded corners apply */
+}
+
+.yt-spec-touch-feedback-shape__fill, .yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--tonal {
+    background: none !important;
+    border: 0px solid var(--tint-border) !important;
+    border-radius: 6px !important;
+    color: var(--yt-foreground) !important;
+    overflow: visible !important;
+    z-index: 5 !important;
+}
+
+.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal {
+    background: transparent !important;
+}
+
+/* Searchbar */
+
+.ytSearchboxComponentInputBox {
+    border-radius: var(--button-radius) !important;
+}
+
+.ytSearchboxComponentInputBoxDark {
+    background-color: var(--button-color) !important;
+    border-bottom-color: var(--yt-foreground) !important
+}
+
+.ytSearchboxComponentInputBoxDark.ytSearchboxComponentInputBoxHasFocus {
+    border-color: hsl(0deg 0% 0% / 0%) !important;
+    border-bottom-color: var(--accent) !important;
+    background-color: var(--yt-bg) !important;
+}
+
+.ytSearchboxComponentSearchButtonDark {
+    border: 0px solid hsl(0, 0%, 18.82%) !important;
+    background-color: var(--);
+}
+
+.ytSearchboxComponentSearchButton {
+    border-radius: 6px !important;
+    width: 36px !important;
+    margin: 0 0 0 4px !important;
+}
+
+.ytSearchboxComponentHost {
+    height: 36px !important;
+}
+
+/* sidebar buttons */
+
+ytd-guide-entry-renderer[active] {
+    background-color: var(--button-color) !important;
+}
+
+tp-yt-paper-item:focus, .tp-yt-paper-item.tp-yt-paper-item:focus {
+    position: relative !important;
+    outline: 0 !important;
+    background-color: var(--button-color) !important;
+}
+
+/* Sidebar buttons: resting transparent, hover/focus use --button-color */
+#guide a.yt-simple-endpoint,
+#guide ytd-guide-entry-renderer,
+ytd-guide-entry-renderer a.yt-simple-endpoint,
+#guide tp-yt-paper-item,
+#guide tp-yt-paper-icon-button,
+#guide ytd-guide-entry-renderer yt-formatted-string,
+#guide .guide-icon,
+#guide ytd-mini-guide-renderer {
+ background: transparent !important;
+ color: var(--yt-foreground) !important;
+ border: none !important;
+ border-radius: var(--button-radius,4px) !important;
+}
+
+#guide a.yt-simple-endpoint:hover,
+#guide ytd-guide-entry-renderer:hover,
+#guide tp-yt-paper-item:hover,
+#guide tp-yt-paper-icon-button:hover,
+#guide a.yt-simple-endpoint:focus,
+#guide ytd-guide-entry-renderer:focus,
+#guide tp-yt-paper-item:focus {
+ background: var(--button-color) !important;
+ color: var(--yt-foreground) !important;
+}
+
+/* Ensure icon-only entries also show hover background */
+#guide a.yt-simple-endpoint.icon-only:hover,
+#guide .guide-icon-only:hover,
+#guide ytd-guide-entry-renderer.icon-only:hover {
+ background: var(--button-color) !important;
+}
+
+/* Keep active/selected state using the same token (already present but add specificity) */
+#guide a.yt-simple-endpoint[aria-selected="true"],
+#guide ytd-guide-entry-renderer[selected],
+#guide ytd-guide-entry-renderer.active,
+#guide a.yt-simple-endpoint[selected] {
+ background: var(--button-color) !important;
+ color: var(--yt-foreground) !important;
+}
+
+/* Ensure currently open page in sidebar is highlighted */
+#guide a.yt-simple-endpoint[aria-current="page"],
+#guide a.yt-simple-endpoint[aria-current="true"],
+#guide a.yt-simple-endpoint[aria-current],
+#guide a.yt-simple-endpoint[aria-selected="true"],
+#guide a.yt-simple-endpoint[selected],
+#guide ytd-guide-entry-renderer[selected],
+#guide ytd-guide-entry-renderer[active],
+#guide ytd-guide-entry-renderer[aria-current="page"],
+#guide tp-yt-paper-item[selected],
+#guide tp-yt-paper-item[aria-current="page"] {
+ background: var(--button-color) !important;
+ color: var(--yt-foreground) !important;
+}
+
+/* Also ensure child elements in active entries don't override background */
+#guide a.yt-simple-endpoint[aria-current="page"] *,
+#guide ytd-guide-entry-renderer[selected] * {
+ background: transparent !important;
+ color: inherit !important;
+}
+
+/* Menus */
+
+.ytSheetViewModelContextual {
+    border-radius: 8px !important;
+}
+
+/* Profile Page Black section on top fix */
+
+ytd-section-header-renderer,
+.section-header {
+  background-color: transparent !important; /* or your theme color */
+  border: none !important;
+}
+
+/* Emoji picker background */
+#emojis {
+    background-color: var(--mica-standard) !important;
+    border: 1px solid var(--tint-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35) !important;
+}
+
+/* Homepage Feed WinUI Card Design */
+
+/* 1. Core card container styling */
+ytd-rich-item-renderer {
+  position: relative !important;
+  background: var(--mica-card) !important;
+  border: 1px var(--tint-border) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.1)
+    !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* 4. Rounded thumbnail corners */
+ytd-rich-item-renderer ytd-rich-grid-media a#thumbnail {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+/* 5. Title styling */
+ytd-rich-item-renderer ytd-rich-grid-media #title {
+  margin: 8px 0 4px !important;
+  font-weight: 500 !important;
+  color: #000 !important;
+}
+
+/* 6. Channel name styling */
+ytd-rich-item-renderer ytd-rich-grid-media yt-formatted-string {
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-size: 0.875rem !important;
+}
+
+/* 7. Metadata (views/date) styling */
+ytd-rich-item-renderer ytd-rich-grid-media #metadata-line span {
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-size: 0.75rem !important;
+}
+
+/* 8. Hover elevation effect */
+ytd-rich-item-renderer:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.15)
+    !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Posts Section of Homepage Feed */
+
+ytd-post-renderer[uses-compact-lockup] {
+    border-width: 0px;
+    background: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    border: none;
+}
+/* See More button still doesn't work */
+/*
+button-container style-scope ytd-rich-shelf-renderer {
+    background-color: var(--bg-tint)
+    border-radius: 6px;
+}
+*/
