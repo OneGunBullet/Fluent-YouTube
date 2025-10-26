@@ -1,7 +1,7 @@
 # Fluent YouTube
 A YouTube WebView app that redesigns the entire UI using Fluent UI Web.
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/554315ad-5995-4c8b-be41-6baa451b4b43" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3254439b-57e5-4ea2-9528-9ee154b22b2e" />
 
 ### Info
 - Uses CSS injection to modify the UI
