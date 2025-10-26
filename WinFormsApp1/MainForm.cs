@@ -517,7 +517,18 @@ namespace WinYouTube
                         Debug.WriteLine("Web: win-controls-detached");
                         break;
                     case "window-drag":
-                        BeginWindowDrag();
+                        // Marshal to UI thread to avoid calling native UI APIs from the WebView/host thread
+                        try
+                        {
+                            this.BeginInvoke((Action)(() =>
+                            {
+                                try { BeginWindowDrag(); } catch (Exception ex) { Debug.WriteLine("BeginWindowDrag (invoked) failed: " + ex); }
+                            }));
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("Failed to marshal window-drag to UI thread: " + ex);
+                        }
                         break;
                     case "window-min":
                     case "window-minimize":

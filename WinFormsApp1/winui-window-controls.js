@@ -22,7 +22,7 @@
  if (document.getElementById(id)) return;
  var s = document.createElement('style');
  s.id = id;
- s.textContent = '#container.ytd-masthead, div#container.style-scope.ytd-masthead { padding:0 198px 0 16px !important; }';
+ s.textContent = '#container.ytd-masthead, div#container.style-scope.ytd-masthead { padding:0 140px 0 16px !important; }';
  document.head.appendChild(s);
  } catch(_){ }
  }
@@ -96,7 +96,7 @@ button#win-min.btn, button#win-max.btn { background: transparent; color: #ffffff
  var ns = 'http://www.w3.org/2000/svg';
  var svg = document.createElementNS(ns, 'svg');
  // correct small-icon viewBox and sizes
- svg.setAttribute('viewBox', '001616');
+ svg.setAttribute('viewBox', '0 0 16 16');
  svg.setAttribute('width', '16');
  svg.setAttribute('height', '16');
  svg.setAttribute('aria-hidden', 'true');
@@ -123,23 +123,29 @@ button#win-min.btn, button#win-max.btn { background: transparent; color: #ffffff
  svg.appendChild(r);
 
  } else if (type === 'close') {
- // two lines forming an X
- var p1 = document.createElementNS(ns, 'path');
- p1.setAttribute('d', 'M44 L1212');
- p1.setAttribute('stroke', 'currentColor');
- p1.setAttribute('stroke-width', '1.4');
- p1.setAttribute('stroke-linecap', 'round');
- p1.setAttribute('fill', 'none');
+ // use two <line> elements to form an X with valid coordinates
+ var l1 = document.createElementNS(ns, 'line');
+ l1.setAttribute('x1', '4');
+ l1.setAttribute('y1', '4');
+ l1.setAttribute('x2', '12');
+ l1.setAttribute('y2', '12');
+ l1.setAttribute('stroke', 'currentColor');
+ l1.setAttribute('stroke-width', '1.6');
+ l1.setAttribute('stroke-linecap', 'round');
+ l1.setAttribute('fill', 'none');
 
- var p2 = document.createElementNS(ns, 'path');
- p2.setAttribute('d', 'M124 L412');
- p2.setAttribute('stroke', 'currentColor');
- p2.setAttribute('stroke-width', '1.4');
- p2.setAttribute('stroke-linecap', 'round');
- p2.setAttribute('fill', 'none');
+ var l2 = document.createElementNS(ns, 'line');
+ l2.setAttribute('x1', '12');
+ l2.setAttribute('y1', '4');
+ l2.setAttribute('x2', '4');
+ l2.setAttribute('y2', '12');
+ l2.setAttribute('stroke', 'currentColor');
+ l2.setAttribute('stroke-width', '1.6');
+ l2.setAttribute('stroke-linecap', 'round');
+ l2.setAttribute('fill', 'none');
 
- svg.appendChild(p1);
- svg.appendChild(p2);
+ svg.appendChild(l1);
+ svg.appendChild(l2);
  }
 
  return svg;

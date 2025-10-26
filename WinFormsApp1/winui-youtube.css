@@ -11,10 +11,12 @@
     --yt-masthead-height: 56px;
     --yt-foreground: #ffffff;
     --yt-muted: rgba(255,255,255,0.55);
-    --yt-bg: hsla(0, 0%, 23%, 30%);
+    --yt-bg: hsl(0, 0%, 11%);
 
     --button-color: hsla(0, 0%, 100%, 6.05%);
     --button-radius: 4px;
+    --accent-button: color-mix(in srgb, var(--accent) 90%, black 10%);
+
 }
 
 /* Tokens for unified tinted panels (use comment tint across UI) */
@@ -324,6 +326,10 @@ tp-yt-paper-item:focus, .tp-yt-paper-item.tp-yt-paper-item:focus {
     background-color: var(--button-color) !important;
 }
 
+ytd-guide-section-renderer {
+    --paper-item-min-height: 36px !important;
+}
+
 /* Sidebar buttons: resting transparent, hover/focus use --button-color */
 #guide a.yt-simple-endpoint,
 #guide ytd-guide-entry-renderer,
@@ -388,18 +394,134 @@ ytd-guide-entry-renderer a.yt-simple-endpoint,
  color: inherit !important;
 }
 
-/* Menus */
+/* Fluent-style active sidebar marker (minimal) */
+#guide a.yt-simple-endpoint[aria-current="page"],
+#guide a.yt-simple-endpoint[selected],
+#guide ytd-guide-entry-renderer[selected],
+#guide ytd-guide-entry-renderer[active] {
+ position: relative !important;
+}
+
+#guide a.yt-simple-endpoint[aria-current="page"]::before,
+#guide a.yt-simple-endpoint[selected]::before,
+#guide ytd-guide-entry-renderer[selected]::before,
+#guide ytd-guide-entry-renderer[active]::before {
+ content: '';
+ position: absolute;
+ left:0; /* flush against left edge */
+ top:50%;
+ height:50%; /* half the button height */
+ width:3px;
+ transform: translateY(-50%); /* vertically center the half-height marker */
+ border-radius:2px;
+ background: var(--accent) !important;
+ pointer-events: none;
+}
+
+/* Fix Padding */
+
+#sections.ytd-guide-renderer>*.ytd-guide-renderer:first-child, 
+#sections.ytd-guide-renderer>ytd-guide-section-renderer.ytd-guide-renderer:not(:first-child), 
+#sections.ytd-guide-renderer>ytd-guide-subscriptions-section-renderer.ytd-guide-renderer {
+    padding: 8px !important;
+}
+
+/*
+-----
+Menus 
+-----
+*/
+
+/* Masthead Menus */
 
 .ytSheetViewModelContextual {
     border-radius: 8px !important;
 }
 
-/* Profile Page Black section on top fix */
+ytd-multi-page-menu-renderer {
+    display: inline-block;
+    background: var(--yt-bg) !important;
+    overflow-x: hidden !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 32px 0 var(--yt-spec-overlay-background-light);
+    backdrop-filter: blur(0px) !important;
+    display: flexbox;
+    display: flex;
+    flex-direction: column;
+}
+
+ytd-compact-link-renderer {
+    --paper-item-min-height: 36px !important;
+    display: block;
+    border-radius: 4px !important;
+}
+
+#sections.ytd-multi-page-menu-renderer>*.ytd-multi-page-menu-renderer:not(ytd-comment-video-thumbnail-header-renderer) {
+    padding: 4px 4px !important;
+}
+
+/* Video ... Menus */
+
+.ytContextualSheetLayoutContentContainer {
+    flex-grow: 1;
+    padding: 4px !important;
+    overflow-y: auto;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+}
+
+.ytContextualSheetLayoutHost {
+    background-color: var(--yt-bg) !important;
+}
+
+.yt-list-item-view-model__container--in-popup {
+    border-radius: 4px !important;
+    color: var(--yt-bg) !important;
+}
+
+.yt-list-item-view-model {
+    height: 36px !important;
+    display: inline-block;
+    width: 100%;
+    color: transparent !important;
+}
+
+.yt-list-item-view-model__container--tappable {
+    height: 36px !important;
+    color: var(--button-color) !important;
+}
+
+/* Video Page Menus */
+
+ytd-menu-popup-renderer {
+    background-color: var(--yt-bg) !important;
+    border-radius: 8px !important;
+    padding: 4px !important;
+}
+
+tp-yt-paper-item.ytd-menu-service-item-download-renderer, tp-yt-paper-item.ytd-menu-service-item-renderer {
+    border-radius: 4px !important;
+}
+
+
+
+/* 
+----------------------------
+Random fixes for other pages
+----------------------------
+*/
+
+/* Black strips on top */
 
 ytd-section-header-renderer,
 .section-header {
   background-color: transparent !important; /* or your theme color */
   border: none !important;
+}
+
+#page-header.ytd-tabbed-page-header, 
+#page-header-container.ytd-tabbed-page-header, #tabs-container.ytd-tabbed-page-header {
+    background-color: transparent !important;
 }
 
 /* Emoji picker background */
@@ -480,3 +602,87 @@ button-container style-scope ytd-rich-shelf-renderer {
     border-radius: 6px;
 }
 */
+
+/*
+-------------------------------
+Make YT Elements match Accent color 
+-------------------------------
+*/
+
+div.svg#yt-ringo2-svg_yt9.g.path[Attributes Style] {
+    d: path("M 14.4848 20 C 14.4848 20 23.5695 20 25.8229 19.4 C 27.0917 19.06 28.0459 18.08 28.3808 16.87 C 29 14.65 29 9.98 29 9.98 C 29 9.98 29 5.34 28.3808 3.14 C 28.0459 1.9 27.0917 0.94 25.8229 0.61 C 23.5695 0 14.4848 0 14.4848 0 C 14.4848 0 5.42037 0 3.17711 0.61 C 1.9286 0.94 0.954148 1.9 0.59888 3.14 C 0 5.34 0 9.98 0 9.98 C 0 9.98 0 14.65 0.59888 16.87 C 0.954148 18.08 1.9286 19.06 3.17711 19.4 C 5.42037 20 14.4848 20 14.4848 20 Z");
+    fill: var(--accent) !important;
+}
+
+/* Target YouTube masthead play-shape path by `d` prefix and common red fills; set to --accent */
+/* Matches inline SVG play shape path that begins with M14.4848... */
+
+ytd-topbar-logo-renderer svg path[d^="M14.4848"],
+a#logo svg path[d^="M14.4848"],
+#logo svg path[d^="M14.4848"],
+#logo-icon svg path[d^="M14.4848"],
+ytd-logo-renderer svg path[d^="M14.4848"] {
+ fill: var(--accent) !important;
+}
+
+/* Also override common red hex fills in that logo area as a fallback */
+ytd-topbar-logo-renderer svg path[fill="#FF0033"],
+ytd-topbar-logo-renderer svg path[fill="#ff0033"],
+#logo svg path[fill="#FF0033"],
+#logo svg path[fill="#ff0033"],
+#logo-icon svg path[fill="#FF0033"],
+#logo-icon svg path[fill="#ff0033"] {
+ fill: var(--accent) !important;
+}
+
+/* Some variants use #ff0000 or #ff0033 or red; include those too */
+ytd-topbar-logo-renderer svg path[fill="#ff0000"],
+ytd-topbar-logo-renderer svg path[fill="#FF0000"],
+#logo svg path[fill="#ff0000"],
+#logo svg path[fill="#FF0000"],
+#logo-icon svg path[fill="#ff0000"],
+#logo-icon svg path[fill="#FF0000"],
+#logo svg path[fill="red"],
+#logo-icon svg path[fill="red"] {
+ fill: var(--accent) !important;
+}
+
+/* Ensure gradient stops used by the logo are recolored */
+ytd-topbar-logo-renderer svg stop[stop-color="#FF0033"],
+ytd-topbar-logo-renderer svg stop[stop-color="#ff0033"],
+#logo svg stop[stop-color="#FF0033"],
+#logo svg stop[stop-color="#ff0033"],
+#logo-icon svg stop[stop-color="#FF0033"],
+#logo-icon svg stop[stop-color="#ff0033"] {
+ stop-color: var(--accent) !important;
+}
+
+/* Video Player */
+
+.ytp-swatch-background-color {
+    background-color: var(--accent) !important;
+}
+
+.ytp-progress-bar .ytp-play-progress,
+.ytp-progress-bar .ytp-play-progress[style],
+.ytp-play-progress,
+.ytp-swatch-background-color {
+ background-color: var(--accent) !important;
+ background: var(--accent) !important;
+}
+
+.ytp-scrubber-button:hover,
+.ytp-progress-bar:hover .ytp-play-progress {
+ filter: brightness(1.05) !important;
+}
+
+ /* Play button for Playlists */
+
+.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--filled {
+    color: var(--yt-foreground) !important;
+    background-color: var(--accent) !important;
+}
+
+.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--filled:hover {
+    background: var(--accent-button) !important;
+ }
